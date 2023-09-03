@@ -21,7 +21,7 @@ def generate_launch_description():
             name='rosbridge_server',
             namespace='',
             output='screen',
-            #parameters=[{'address': '/workspaces/ros2_docker/src/pepper_interaction/scripts/web_interface/index.html'}],  # Add any additional parameters if needed
+            parameters=[{'address': '192.168.122.1'}],  # Add any additional parameters if needed
             #arguments=[['url_path:=/workspaces/ros2_docker/src/pepper_interaction/scripts/web_interface/index.html']],  # Add parameter file path if needed
             #remappings=[('/web_commands', '/web_commands')]  # Remap topics if needed
         ),

@@ -1,6 +1,6 @@
 // Connect to ROS2 WebSocket bridge
 const ros = new ROSLIB.Ros({
-        url: 'ws://localhost:9090' // Replace with your ROS2 WebSocket bridge URL
+        url: 'ws://192.168.122.1:9090' // Replace with your ROS2 WebSocket bridge URL
     });
     
     ros.on('connection', () => {
