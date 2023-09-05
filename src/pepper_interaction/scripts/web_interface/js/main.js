@@ -1,35 +1,40 @@
+const address = '192.168.0.105' // Replace with your ROS2 WebSocket bridge URL
 // Connect to ROS2 WebSocket bridge
 const ros = new ROSLIB.Ros({
-        url: 'ws://192.168.0.105:9090' // Replace with your ROS2 WebSocket bridge URL
+        url: 'ws://'+ address+':9090' // Replace with your ROS2 WebSocket bridge URL
     });
-    
+
     ros.on('connection', () => {
         console.log('Connected to ROS2 WebSocket' );
     });
-    
+
     ros.on('error', (error) => {
         console.error('Error connecting to ROS2 WebSocket:', error);
     });
-    
+
     ros.on('close', () => {
         console.log('Connection to ROS2 WebSocket closed');
     });
-    
+
     // Define a publisher for sending numbers to a topic
     const numberTopic = new ROSLIB.Topic({
         ros: ros,
         name: '/web_commands', // Replace with your desired topic name
         messageType: 'std_msgs/Int32' // Adjust the message type as needed
     });
-    
+    // export ros, numberTopic;
+    window.ros = ros;
+    window.numberTopic = numberTopic;
     // Publish a code when the navButton is clicked
     const publishButton = document.getElementById('navButton');
     publishButton.addEventListener('click', () => {
         const nav_value = 0; // Code assigned to the button
-        const message = new ROSLIB.Message({
-            data: nav_value
-        });
-        numberTopic.publish(message);
+       // const message = new ROSLIB.Message({
+        //    data: nav_value
+       // });
+       // numberTopic.publish(message);
+        // edirect to address port 5000
+        window.location.assign("http://"+address+":5000");
         console.log('Published:', nav_value);
     });
 
@@ -58,12 +63,9 @@ const ros = new ROSLIB.Ros({
     // Publish a code when misButton is clicked
     const publishButton4 = document.getElementById('misButton');
     publishButton4.addEventListener('click', () => {
-        const mis_value = 3; // Code assigned to the button
-        const message = new ROSLIB.Message({
-            data: mis_value
-        });
-        numberTopic.publish(message);
-        console.log('Published:', mis_value);
+        // redirect to misuration.html
+        window.location.assign("misuration.html");
+        console.log('Redirecting to misuration page');
     });
 
     // Publish a code when moveButton is clicked
