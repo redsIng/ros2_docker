@@ -13,7 +13,18 @@ def generate_launch_description():
             default_value='9090',
             description='WebSocket server port'
         ),
-
+        # Declare a launch argument for the IP address (adjust as needed)
+        DeclareLaunchArgument(
+            'ip_address',
+            description='IP address to use for the WebSocket server'
+        ),
+        # retrieve launch arguments
+        launch.actions.LogInfo(
+            msg=[
+                'WebSocket server running at port ', LaunchConfiguration('websocket_port'),
+                ' and IP address ', LaunchConfiguration('ip_address')
+            ]
+        ),
         # Start the rosbridge_websocket server
         Node(
             package='rosbridge_server',
@@ -21,8 +32,17 @@ def generate_launch_description():
             name='rosbridge_server',
             namespace='',
             output='screen',
-            parameters=[{'address': '192.168.122.1'}],  # Add any additional parameters if needed
+            parameters=[{'address':  LaunchConfiguration('ip_address') },
+                        {'port': LaunchConfiguration('port')}],  # Add any additional parameters if needed
             #arguments=[['url_path:=/workspaces/ros2_docker/src/pepper_interaction/scripts/web_interface/index.html']],  # Add parameter file path if needed
             #remappings=[('/web_commands', '/web_commands')]  # Remap topics if needed
+        ),
+        Node(
+            package='pepper_interaction',
+            executable='web_manager',
+            name='web_manager',
+            namespace='',
+            output='screen',
+
         ),
     ])
